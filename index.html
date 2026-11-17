@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ENS Smart Assistant</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #100e1b;
+  color: white;
+  text-align: center;
+}
+header {
+  background: #201936;
+  padding: 25px;
+  color: #c5b5ff;
+  font-size: 23px;
+}
+main { padding: 25px 15px; }
+h1 { color: #c5b5ff; }
+.card {
+  background: #241e39;
+  padding: 20px;
+  margin: 15px auto;
+  border-radius: 15px;
+  max-width: 450px;
+}
+button {
+  background: #8064d9;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+}
+input {
+  padding: 12px;
+  width: 75%;
+  border-radius: 8px;
+  border: none;
+}
+</style>
+</head>
+<body>
+<header>🎓 ENS Smart Assistant</header>
+<main>
+<h1>مرحباً بك في مساعدك الذكي</h1>
+<p>رفيقك في الفهم والمراجعة وتنظيم دراستك.</p>
+
+<div class="card">
+<h2>📚 مكتبة المقاييس</h2>
+<p>علم النفس</p>
+<p>اللغة العربية</p>
+<p>الذكاء الاصطناعي</p>
+<p>الرياضيات</p>
+</div>
+
+<div class="card">
+<h2>🤖 المساعد الذكي</h2>
+<input id="question" placeholder="اكتبي سؤالك هنا">
+<button onclick="send()">إرسال</button>
+<p id="answer"></p>
+</div>
+
+<div class="card">
+<h2>📝 فضاء المراجعة</h2>
+<p>ملخصات الدروس والاختبارات</p>
+</div>
+</main>
+<script>
+function send() {
+  const q = document.getElementById("question").value.trim();
+  if (!q) return;
+  document.getElementById("answer").textContent =
+    "تم تسجيل سؤالك. سيتم ربط المساعد بالذكاء الاصطناعي لاحقاً.";
+}
+</script>
+</body>
+</html>
