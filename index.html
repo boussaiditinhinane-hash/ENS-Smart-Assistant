@@ -5,77 +5,218 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ENS Smart Assistant</title>
+
 <style>
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #100e1b;
+  background: #0b1120;
   color: white;
-  text-align: center;
 }
+
 header {
-  background: #201936;
-  padding: 25px;
-  color: #c5b5ff;
-  font-size: 23px;
+  background: #17243b;
+  padding: 22px 15px;
+  text-align: center;
+  border-bottom: 2px solid #344563;
 }
-main { padding: 25px 15px; }
-h1 { color: #c5b5ff; }
-.card {
-  background: #241e39;
+
+header h1 {
+  color: #80b9ff;
+  margin: 5px;
+}
+
+header p {
+  color: #cbd5e1;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  padding: 18px;
+}
+
+.welcome {
+  background: #17243b;
   padding: 20px;
-  margin: 15px auto;
   border-radius: 15px;
-  max-width: 450px;
+  text-align: center;
+  margin-bottom: 20px;
 }
+
+h2 {
+  color: #80b9ff;
+}
+
+select, textarea, button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+select, textarea {
+  background: #17243b;
+  color: white;
+  border: 1px solid #40516e;
+}
+
 button {
-  background: #8064d9;
+  background: #2563eb;
   color: white;
   border: none;
-  padding: 12px 20px;
-  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
 }
-input {
+
+button:hover {
+  background: #1d4ed8;
+}
+
+.chat {
+  background: #17243b;
+  border-radius: 15px;
+  padding: 15px;
+  min-height: 250px;
+  margin-top: 20px;
+}
+
+.message {
   padding: 12px;
-  width: 75%;
-  border-radius: 8px;
-  border: none;
+  margin: 10px 0;
+  border-radius: 10px;
+  line-height: 1.8;
+}
+
+.bot {
+  background: #263b5c;
+  text-align: right;
+}
+
+.user {
+  background: #174c80;
+  text-align: right;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #94a3b8;
+  font-size: 13px;
 }
 </style>
 </head>
+
 <body>
-<header>🎓 ENS Smart Assistant</header>
-<main>
-<h1>مرحباً بك في مساعدك الذكي</h1>
-<p>رفيقك في الفهم والمراجعة وتنظيم دراستك.</p>
 
-<div class="card">
-<h2>📚 مكتبة المقاييس</h2>
-<p>علم النفس</p>
-<p>اللغة العربية</p>
-<p>الذكاء الاصطناعي</p>
-<p>الرياضيات</p>
+<header>
+  <h1>🎓 مساعد ENS الذكي</h1>
+  <p>رفيقك الجامعي في المدرسة العليا للأساتذة</p>
+</header>
+
+<div class="container">
+
+  <div class="welcome">
+    <h2>مرحباً بك!</h2>
+    <p>
+      مساعدك التعليمي لفهم الدروس،
+      مراجعة المحاضرات وتنظيم دراستك.
+    </p>
+  </div>
+
+  <h2>📚 اختر المقياس</h2>
+
+  <select id="subject">
+    <option value="">اختر المقياس</option>
+    <option>الذكاء الاصطناعي</option>
+    <option>علم النفس</option>
+    <option>النحو والصرف</option>
+    <option>الرياضيات</option>
+    <option>تكنولوجيا الإعلام والاتصال</option>
+    <option>مقاييس أخرى</option>
+  </select>
+
+  <h2>💬 المساعد التعليمي</h2>
+
+  <div class="chat" id="chat">
+    <div class="message bot">
+      مرحباً! أنا مساعد ENS الذكي.
+      كيف يمكنني مساعدتك في دراستك اليوم؟
+    </div>
+  </div>
+
+  <textarea id="question"
+    rows="3"
+    placeholder="اكتب سؤالك هنا..."></textarea>
+
+  <button onclick="sendMessage()">
+    إرسال السؤال
+  </button>
+
+  <button onclick="clearChat()"
+    style="background:#475569">
+    مسح المحادثة
+  </button>
+
 </div>
 
-<div class="card">
-<h2>🤖 المساعد الذكي</h2>
-<input id="question" placeholder="اكتبي سؤالك هنا">
-<button onclick="send()">إرسال</button>
-<p id="answer"></p>
-</div>
+<footer>
+  ENS Smart Assistant © 2026
+  <br>
+  مشروع تعليمي لطلبة المدرسة العليا للأساتذة
+</footer>
 
-<div class="card">
-<h2>📝 فضاء المراجعة</h2>
-<p>ملخصات الدروس والاختبارات</p>
-</div>
-</main>
 <script>
-function send() {
-  const q = document.getElementById("question").value.trim();
-  if (!q) return;
-  document.getElementById("answer").textContent =
-    "تم تسجيل سؤالك. سيتم ربط المساعد بالذكاء الاصطناعي لاحقاً.";
+function sendMessage() {
+
+  const question =
+    document.getElementById("question").value.trim();
+
+  const subject =
+    document.getElementById("subject").value;
+
+  const chat =
+    document.getElementById("chat");
+
+  if (!question) {
+    alert("يرجى كتابة السؤال أولاً");
+    return;
+  }
+
+  if (!subject) {
+    alert("يرجى اختيار المقياس");
+    return;
+  }
+
+  const userMessage = document.createElement("div");
+  userMessage.className = "message user";
+  userMessage.textContent = question;
+
+  chat.appendChild(userMessage);
+
+  const answer = document.createElement("div");
+  answer.className = "message bot";
+  answer.textContent =
+    "تم تسجيل سؤالك في مقياس " + subject +
+    ". سيتم ربط المساعد بقاعدة الدروس والمحاضرات لتقديم إجابة علمية موثوقة.";
+
+  chat.appendChild(answer);
+
+  document.getElementById("question").value = "";
+
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function clearChat() {
+  document.getElementById("chat").innerHTML =
+    '<div class="message bot">مرحباً! كيف يمكنني مساعدتك؟</div>';
 }
 </script>
+
 </body>
 </html>
